@@ -38,7 +38,7 @@ public class Vue_ListeArticle extends JPanel implements Observateur {
         this.descriptionPane.setBorder(BorderFactory.createTitledBorder("Description"));
 
         // Create some items to add to the jList
-        this.defaultListModel=new DefaultListModel();
+        this.defaultListModel = new DefaultListModel();
         this.jList = new JList(this.defaultListModel);
 
         // Create a scrollPanel to hold all other components
@@ -69,10 +69,10 @@ public class Vue_ListeArticle extends JPanel implements Observateur {
 
     @Override
     public void update() {
+        this.defaultListModel.removeAllElements();
+
         if (this.ensembleFlux.getFluxCourant() != null) {
             this.jList.setListData(this.ensembleFlux.getFluxCourant().extract().toArray());
-        }else{
-            this.defaultListModel.removeAllElements();
         }
         this.descriptionPane.setText("");
         this.revalidate();
@@ -83,7 +83,7 @@ public class Vue_ListeArticle extends JPanel implements Observateur {
 
         @Override
         public void valueChanged(ListSelectionEvent e) {
-            descriptionPane.setText(((Data)jList.getSelectedValue()).getDescription());
+            descriptionPane.setText(((Data) jList.getSelectedValue()).getDescription());
         }
     }
 }

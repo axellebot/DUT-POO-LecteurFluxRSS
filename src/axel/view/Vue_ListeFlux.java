@@ -1,6 +1,7 @@
 package axel.view;
 
 import axel.control.Contr_CheckListFlux;
+import axel.control.Contr_DeleteListFlux;
 import axel.control.Observateur;
 import axel.model.EnsembleFlux;
 import axel.model.FluxRSS;
@@ -18,10 +19,11 @@ public class Vue_ListeFlux extends JPanel implements Observateur {
 
     private JScrollPane scrollPane;
     private JList jList;
-    private JButton btnCheck;
+    private JButton btnCheck,btnDelete;
     private DefaultListModel defaultListModel;
 
     private Contr_CheckListFlux controlCheck;
+    private Contr_DeleteListFlux controlDelete;
 
     public Vue_ListeFlux(EnsembleFlux ensembleFlux) {
         this.setBorder(BorderFactory.createTitledBorder("Flux enregistrés"));
@@ -31,8 +33,10 @@ public class Vue_ListeFlux extends JPanel implements Observateur {
 
         //Controlleur
         this.controlCheck = new Contr_CheckListFlux(this.ensembleFlux);
+        this.controlDelete=new Contr_DeleteListFlux(this.ensembleFlux);
 
         this.btnCheck = new JButton("Check");
+        this.btnDelete=new JButton("Supprimer");
 
         // Create some items to add to the list
         this.defaultListModel = new DefaultListModel();
@@ -55,13 +59,15 @@ public class Vue_ListeFlux extends JPanel implements Observateur {
         //ajout à la fenetre
         gbc.weighty = 50;
         this.add(this.scrollPane, gbc);
-        gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.weighty = 1;
         this.add(this.btnCheck, gbc);
+        gbc.gridy++;
+        this.add(this.btnDelete,gbc);
 
         //listener
         this.btnCheck.addActionListener(new Ecouteur_Check1());
+        this.btnDelete.addActionListener(new Ecouteur_Delete());
 
         this.jList.setListData(this.ensembleFlux.getListFlux().toArray());
     }
@@ -85,4 +91,15 @@ public class Vue_ListeFlux extends JPanel implements Observateur {
             }
         }
     }
+
+    class Ecouteur_Delete implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (e.getSource() == btnDelete) {
+                controlDelete.control((FluxRSS) jList.getSelectedValue());
+            }
+        }
+    }
 }
+

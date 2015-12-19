@@ -67,7 +67,7 @@ public class Vue_Form extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == btnCheck) {
-                if (txtUrl != null) {
+                if (txtUrl.getText().length()!=0) {
                     controlCheck.control(new FluxRSS("http://" + txtUrl.getText()));
                 }
             }
@@ -79,8 +79,15 @@ public class Vue_Form extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (e.getSource() == btnEnregistrer) {
-                if (txtUrl.getText() != null) {
-                    controlAjout.control(new FluxRSS("http://" + txtUrl.getText()));
+                if (txtUrl.getText().length()!=0) {
+                    FluxRSS fluxRss=new FluxRSS("http://" + txtUrl.getText());
+                    if(ensembleFlux.getFluxCourant()==fluxRss) {
+                        controlAjout.control(fluxRss);
+                        JOptionPane.showMessageDialog(null, "Le FluxRSS '" + fluxRss + "' a été ajouté !");
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(null, "Le FluxRSS doit être testé avant d'être ajouté !");
+                    }
                 }
             }
         }

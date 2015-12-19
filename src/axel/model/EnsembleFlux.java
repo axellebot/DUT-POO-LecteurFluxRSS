@@ -25,9 +25,10 @@ public class EnsembleFlux implements Observable {
         this.notifyObservateur();
     }
 
-    public void removeFlu(FluxRSS flux) {
+    public void removeFlux(FluxRSS flux) {
         listFlux.remove(flux);
         System.out.println(flux + " -> supprimé");
+        this.notifyObservateur();
     }
 
     @Override
